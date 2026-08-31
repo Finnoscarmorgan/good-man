@@ -29,7 +29,19 @@ h1 {
     font-size: 1.15rem;
     margin: 0 0 68px;
     font-weight: 600;
+    text-align: center;
 }
+
+/* Story title link */
+h1 a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1 a:hover {
+    text-decoration: underline;
+}
+
 
 /* Main story text */
 p {
