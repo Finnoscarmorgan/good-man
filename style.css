@@ -1,0 +1,196 @@
+:root {
+    color-scheme: dark;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    background: #050505;
+}
+
+body {
+    margin: 0;
+    background: #050505;
+    color: #eeeeea;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+/* Main reading column */
+main {
+    width: min(100% - 40px, 660px);
+    margin: auto;
+    padding: 80px 0 180px;
+}
+
+/* Story title */
+h1 {
+    font-size: 1.15rem;
+    margin: 0 0 68px;
+    font-weight: 600;
+}
+
+/* Main story text */
+p {
+    font-size: clamp(1.05rem, 2vw, 1.2rem);
+    line-height: 1.8;
+    margin: 0 0 1.55em;
+}
+
+/* Daniel's prompts to ChatGPT */
+.prompt {
+    margin: 3.2em 0;
+    min-height: 3.6em;
+    color: #f7f7f3;
+    font-family: Aptos, "Segoe UI", Arial, sans-serif;
+}
+
+
+
+/* "You:" label */
+.you {
+    font-weight: 700;
+}
+
+/* Text appearing through the typing animation */
+.typed {
+    font-style: italic;
+}
+
+/* Other quoted material */
+.quoted {
+    color: #e7e7e2;
+}
+
+
+/* --------------------------------
+   TEXT MESSAGES
+   -------------------------------- */
+
+/* All phone messages */
+.text-message {
+    width: fit-content;
+    max-width: 78%;
+    margin: 1.4em 0;
+    padding: 0.65em 0.9em;
+
+    font-family: Aptos, "Segoe UI", Arial, sans-serif;
+    font-size: 0.95em;
+    line-height: 1.5;
+    font-style: normal;
+
+    border-radius: 14px;
+}
+/* Messages sent by Daniel */
+.text-message.sent {
+    margin-left: auto;
+    margin-right: 0;
+
+    background: #0a84ff;
+    color: #ffffff;
+
+    border-bottom-right-radius: 4px;
+}
+
+
+
+
+
+/* Messages received by Daniel */
+.text-message.received {
+    margin-left: 0;
+    margin-right: auto;
+
+    background: #171717;
+    color: #eeeeea;
+
+    border-bottom-left-radius: 4px;
+}
+
+
+/* --------------------------------
+   TYPEWRITER CURSOR
+   -------------------------------- */
+
+.cursor {
+    display: inline-block;
+    width: 1px;
+    height: 1.08em;
+    margin-left: 3px;
+    vertical-align: -0.12em;
+
+    background: currentColor;
+
+    animation: blink 1s steps(1, end) infinite;
+}
+
+
+/* --------------------------------
+   ACCESSIBILITY
+   -------------------------------- */
+
+.sr-only {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* --------------------------------
+   ANIMATIONS
+   -------------------------------- */
+
+@keyframes blink {
+
+    0%,
+    48% {
+        opacity: 1;
+    }
+
+    49%,
+    100% {
+        opacity: 0;
+    }
+}
+
+
+/* --------------------------------
+   MOBILE
+   -------------------------------- */
+
+@media (max-width: 480px) {
+
+    main {
+        width: min(100% - 32px, 660px);
+        padding-top: 54px;
+    }
+
+    .text-message {
+        max-width: 85%;
+    }
+}
+
+
+/* --------------------------------
+   REDUCED MOTION
+   -------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cursor {
+        animation: none;
+    }
+}
