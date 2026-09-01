@@ -32,6 +32,11 @@ h1 {
     text-align: center;
 }
 
+/* Crossed-out original title */
+.old-title {
+    font-weight: normal;
+}
+
 /* Story title link */
 h1 a {
     color: inherit;
@@ -52,8 +57,7 @@ p {
 
 /* Daniel's prompts to ChatGPT */
 .prompt {
-    margin: 3.2em 0;
-    min-height: 3.6em;
+    margin: 0 0 1.55em;
     color: #f7f7f3;
     font-family: Aptos, "Segoe UI", Arial, sans-serif;
 }
