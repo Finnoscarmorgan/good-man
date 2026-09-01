@@ -2,7 +2,6 @@
   const prompts = Array.from(document.querySelectorAll(".prompt"));
 
   if (!prompts.length) {
-    console.warn("Good Man: no .prompt elements were found.");
     return;
   }
 
@@ -10,51 +9,20 @@
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
+  let nextPromptIndex = 0;
   let isTyping = false;
-  const queue = [];
-
-  function addToQueue(prompt) {
-    if (
-      prompt.dataset.started === "true" ||
-      prompt.dataset.queued === "true"
-    ) {
-      return;
-    }
-
-    prompt.dataset.queued = "true";
-    queue.push(prompt);
-
-    processQueue();
-  }
-
-  function processQueue() {
-    if (isTyping || queue.length === 0) {
-      return;
-    }
-
-    const prompt = queue.shift();
-
-    prompt.dataset.queued = "false";
-
-    typePrompt(prompt);
-  }
+  let lastScrollY = window.scrollY;
+  let ticking = false;
 
   function typePrompt(prompt) {
-    if (prompt.dataset.started === "true") {
-      processQueue();
-      return;
-    }
+    if (isTyping) return;
 
     const target = prompt.querySelector(".typed");
     const cursor = prompt.querySelector(".cursor");
     const text = prompt.dataset.text || "";
 
-    if (!target) {
-      processQueue();
-      return;
-    }
+    if (!target) return;
 
-    prompt.dataset.started = "true";
     isTyping = true;
 
     if (prefersReducedMotion) {
@@ -65,7 +33,7 @@
       }
 
       isTyping = false;
-      processQueue();
+      nextPromptIndex++;
       return;
     }
 
@@ -79,7 +47,12 @@
           }
 
           isTyping = false;
-          processQueue();
+          nextPromptIndex++;
+
+          // IMPORTANT:
+          // Do not automatically trigger the next prompt.
+          // The reader must scroll again.
+
         }, 500);
 
         return;
@@ -88,7 +61,7 @@
       const character = text[index];
 
       target.textContent += character;
-      index += 1;
+      index++;
 
       let delay = 28 + Math.random() * 32;
 
@@ -102,43 +75,49 @@
     typeNextCharacter();
   }
 
-  function checkPrompts() {
-    const triggerPoint = window.innerHeight * 0.78;
+  function checkNextPrompt() {
+    if (isTyping) return;
 
-    prompts.forEach((prompt) => {
-      if (
-        prompt.dataset.started === "true" ||
-        prompt.dataset.queued === "true"
-      ) {
-        return;
-      }
+    const prompt = prompts[nextPromptIndex];
 
-      const rect = prompt.getBoundingClientRect();
+    if (!prompt) return;
 
-      if (rect.top <= triggerPoint && rect.bottom >= 0) {
-        addToQueue(prompt);
-      }
-    });
+    const rect = prompt.getBoundingClientRect();
+
+    const triggerPoint = window.innerHeight * 0.75;
+
+    if (
+      rect.top <= triggerPoint &&
+      rect.bottom > 0
+    ) {
+      typePrompt(prompt);
+    }
   }
 
-  let ticking = false;
+  function handleScroll() {
+    const currentScrollY = window.scrollY;
 
-  function requestCheck() {
-    if (ticking) return;
+    const scrollingDown = currentScrollY > lastScrollY;
+
+    lastScrollY = currentScrollY;
+
+    if (!scrollingDown) {
+      return;
+    }
+
+    if (ticking) {
+      return;
+    }
 
     ticking = true;
 
     window.requestAnimationFrame(() => {
-      checkPrompts();
+      checkNextPrompt();
       ticking = false;
     });
   }
 
-  window.addEventListener("scroll", requestCheck, {
-    passive: true,
+  window.addEventListener("scroll", handleScroll, {
+    passive: true
   });
-
-  window.addEventListener("resize", requestCheck);
-
-  checkPrompts();
 })();

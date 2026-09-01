@@ -79,6 +79,35 @@ p {
     color: #e7e7e2;
 }
 
+/* --------------------------------
+   FOOTNOTES
+   -------------------------------- */
+
+.footnotes {
+    margin-top: 5em;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #bdbdb8;
+}
+
+.footnotes hr {
+    border: 0;
+    border-top: 1px solid #555;
+    margin-bottom: 2em;
+    width: 30%;
+    margin-left: 0;
+}
+
+.footnotes p {
+    font-size: inherit;
+    line-height: inherit;
+    margin-bottom: 1em;
+}
+
+.footnotes sup {
+    font-size: 0.75em;
+    margin-right: 0.4em;
+}
 
 /* --------------------------------
    TEXT MESSAGES
@@ -118,8 +147,8 @@ p {
     margin-left: 0;
     margin-right: auto;
 
-    background: #171717;
-    color: #eeeeea;
+    background: #34c759;
+    color: #ffffff;
 
     border-bottom-left-radius: 4px;
 }
