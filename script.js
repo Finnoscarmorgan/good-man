@@ -94,6 +94,32 @@
     }
   }
 
+
+  const cursors = Array.from(document.querySelectorAll(".cursor"));
+
+const cursorObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      const cursor = entry.target;
+
+      if (cursor.style.display === "none") {
+        return;
+      }
+
+      cursor.classList.toggle("is-nearby", entry.isIntersecting);
+    });
+  },
+  {
+    root: null,
+    rootMargin: "180px 0px",
+    threshold: 0
+  }
+);
+
+cursors.forEach((cursor) => {
+  cursorObserver.observe(cursor);
+});
+
   function handleScroll() {
     const currentScrollY = window.scrollY;
 

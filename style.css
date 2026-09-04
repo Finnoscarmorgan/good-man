@@ -26,7 +26,7 @@ main {
 
 /* Story title */
 h1 {
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     margin: 0 0 68px;
     font-weight: 600;
     text-align: center;
@@ -59,7 +59,7 @@ p {
 .prompt {
     margin: 0 0 1.55em;
     color: #f7f7f3;
-    font-family: Aptos, "Segoe UI", Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -157,7 +157,6 @@ p {
 /* --------------------------------
    TYPEWRITER CURSOR
    -------------------------------- */
-
 .cursor {
     display: inline-block;
     width: 1px;
@@ -166,7 +165,10 @@ p {
     vertical-align: -0.12em;
 
     background: currentColor;
+    opacity: 1;
+}
 
+.cursor.is-nearby {
     animation: blink 1s steps(1, end) infinite;
 }
 
@@ -239,3 +241,4 @@ p {
         animation: none;
     }
 }
+
