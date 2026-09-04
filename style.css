@@ -18,14 +18,14 @@ body {
 }
 
 /* Main reading column */
-main {
+.screen-story {
     width: min(100% - 40px, 660px);
     margin: auto;
     padding: 80px 0 180px;
 }
 
 /* Story title */
-h1 {
+.screen-story h1 {
     font-size: 1.25rem;
     margin: 0 0 68px;
     font-weight: 600;
@@ -33,30 +33,30 @@ h1 {
 }
 
 /* Crossed-out original title */
-.old-title {
+.screen-story .old-title {
     font-weight: normal;
 }
 
 /* Story title link */
-h1 a {
+.screen-story h1 a {
     color: inherit;
     text-decoration: none;
 }
 
-h1 a:hover {
+.screen-story h1 a:hover {
     text-decoration: underline;
 }
 
 
 /* Main story text */
-p {
+.screen-story > p {
     font-size: clamp(1.05rem, 2vw, 1.2rem);
     line-height: 1.8;
     margin: 0 0 1.55em;
 }
 
 /* Daniel's prompts to ChatGPT */
-.prompt {
+.screen-story .prompt {
     margin: 0 0 1.55em;
     color: #f7f7f3;
     font-family: Arial, Helvetica, sans-serif;
@@ -65,17 +65,17 @@ p {
 
 
 /* "You:" label */
-.you {
+.screen-story .you {
     font-weight: 700;
 }
 
 /* Text appearing through the typing animation */
-.typed {
+.screen-story .typed {
     font-style: italic;
 }
 
 /* Other quoted material */
-.quoted {
+.screen-story .quoted {
     color: #e7e7e2;
 }
 
@@ -83,14 +83,14 @@ p {
    FOOTNOTES
    -------------------------------- */
 
-.footnotes {
+.screen-story .footnotes {
     margin-top: 5em;
     font-size: 0.8rem;
     line-height: 1.5;
     color: #bdbdb8;
 }
 
-.footnotes hr {
+.screen-story .footnotes hr {
     border: 0;
     border-top: 1px solid #555;
     margin-bottom: 2em;
@@ -98,13 +98,13 @@ p {
     margin-left: 0;
 }
 
-.footnotes p {
+.screen-story .footnotes p {
     font-size: inherit;
     line-height: inherit;
     margin-bottom: 1em;
 }
 
-.footnotes sup {
+.screen-story .footnotes sup {
     font-size: 0.75em;
     margin-right: 0.4em;
 }
@@ -114,7 +114,7 @@ p {
    -------------------------------- */
 
 /* All phone messages */
-.text-message {
+.screen-story .text-message {
     width: fit-content;
     max-width: 78%;
     margin: 1.4em 0;
@@ -128,7 +128,7 @@ p {
     border-radius: 14px;
 }
 /* Messages sent by Daniel */
-.text-message.sent {
+.screen-story .text-message.sent {
     margin-left: auto;
     margin-right: 0;
 
@@ -143,7 +143,7 @@ p {
 
 
 /* Messages received by Daniel */
-.text-message.received {
+.screen-story .text-message.received {
     margin-left: 0;
     margin-right: auto;
 
@@ -157,7 +157,7 @@ p {
 /* --------------------------------
    TYPEWRITER CURSOR
    -------------------------------- */
-.cursor {
+.screen-story .cursor {
     display: inline-block;
     width: 1px;
     height: 1.08em;
@@ -168,7 +168,7 @@ p {
     opacity: 1;
 }
 
-.cursor.is-nearby {
+.screen-story .cursor.is-nearby {
     animation: blink 1s steps(1, end) infinite;
 }
 
@@ -177,7 +177,7 @@ p {
    ACCESSIBILITY
    -------------------------------- */
 
-.sr-only {
+.screen-story .sr-only {
     position: absolute;
 
     width: 1px;
@@ -219,8 +219,7 @@ p {
    -------------------------------- */
 
 @media (max-width: 480px) {
-
-    main {
+    .screen-story {
         width: min(100% - 32px, 660px);
         padding-top: 54px;
     }
@@ -242,3 +241,318 @@ p {
     }
 }
 
+
+
+/* ================================================================
+   MACHINE-AUGMENTED ALMOSTS — PAGINATED BOOK WORLD
+   ================================================================ */
+
+
+.paper-world {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 56px 20px 110px;
+    background: #eceae6;
+    color: #26231f;
+}
+
+/* The original article remains the semantic source. JavaScript uses its
+   contents to build the visible sequence of pages. */
+.paper-world > .book-page {
+    width: min(760px, calc(100vw - 40px));
+    margin: 0 auto;
+    padding: 90px 95px;
+    background: #ffffff;
+}
+
+.paper-world.is-paginated > .book-page {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.book-pages {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 42px;
+}
+
+.book-sheet {
+    position: relative;
+    width: min(760px, calc(100vw - 40px));
+    height: 1040px;
+    padding: 88px 94px 82px;
+    background: #ffffff;
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.10),
+        0 14px 30px rgba(0, 0, 0, 0.065);
+    overflow: hidden;
+}
+
+/* Very restrained paper variation. */
+.book-sheet::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.09;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            rgba(65, 54, 43, 0.022) 0,
+            rgba(65, 54, 43, 0.022) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    mix-blend-mode: multiply;
+}
+
+.book-sheet-content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.book-title-page .book-sheet-content {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 118px;
+}
+
+.book-opening {
+    width: 100%;
+}
+
+.book-opening h2 {
+    margin: 0 auto;
+    max-width: 17em;
+    text-align: center;
+    font-family: Garamond, "Adobe Garamond Pro", "EB Garamond", "Times New Roman", serif;
+    font-size: clamp(1.75rem, 3vw, 2.15rem);
+    line-height: 1.16;
+    font-weight: 400;
+    font-variant: small-caps;
+    letter-spacing: 0.095em;
+    text-transform: lowercase;
+}
+
+.book-opening h2::first-letter {
+    text-transform: uppercase;
+}
+
+.book-prose,
+.book-notes,
+.book-sheet-content {
+    font-family: Garamond, "Adobe Garamond Pro", "EB Garamond", "Times New Roman", serif;
+}
+
+.book-prose,
+.book-sheet-content {
+    font-size: 1.12rem;
+    line-height: 1.5;
+    text-align: left;
+    hyphens: none;
+    hanging-punctuation: none;
+}
+
+.book-sheet-content > p {
+    text-align: left;
+    margin: 0;
+    text-indent: 1.25em;
+}
+
+.book-sheet-content > p:first-child,
+.book-sheet-content > .book-equation,
+.book-sheet-content > .book-equation + p,
+.book-sheet-content > .book-section-break + p {
+    text-indent: 0;
+}
+
+.book-sheet-content em {
+    font-style: italic;
+}
+
+.book-sheet-content strong {
+    font-weight: 600;
+}
+
+.book-equation {
+    margin: 0 0 4.25em !important;
+    padding-left: 0.1em;
+    text-indent: 0 !important;
+    font-size: 0.82em;
+    letter-spacing: 0.012em;
+    white-space: nowrap;
+}
+
+.book-section-break {
+    margin: 2.1em 0 1.95em;
+    text-align: center;
+    font-size: 0.9em;
+    line-height: 1;
+    break-after: avoid;
+}
+
+
+.book-footnote-ref {
+    font-size: 0.62em;
+    line-height: 0;
+    vertical-align: super;
+}
+
+.book-footnote-ref a,
+.book-footnote-back {
+    color: inherit;
+    text-decoration: none;
+}
+
+.book-notes {
+    margin: 0;
+    padding-top: 0;
+    border-top: 1px solid rgba(38, 35, 31, 0.35);
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.book-notes ol {
+    margin: 1.4rem 0 0;
+    padding-left: 1.25rem;
+}
+
+.book-notes li + li {
+    margin-top: 1rem;
+}
+
+.book-footnote-back {
+    margin-left: 0.3em;
+}
+
+.book-page-number {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    bottom: 33px;
+    text-align: center;
+    font-family: Garamond, "Adobe Garamond Pro", "EB Garamond", "Times New Roman", serif;
+    font-size: 0.78rem;
+    line-height: 1;
+    color: #3d3934;
+}
+
+@media (max-width: 700px) {
+
+    /* Grey background around the book pages */
+    .paper-world {
+        padding: 24px 12px 60px;
+        background: #e8e6e1;
+    }
+
+    /* Space between individual pages */
+    .book-pages {
+        gap: 24px;
+    }
+
+    /* Individual book page */
+    .book-sheet {
+        box-sizing: border-box;
+
+        /* Nearly full width of phone */
+        width: calc(100vw - 24px);
+
+        /* Keep a portrait book-page shape */
+        height: calc((100vw - 24px) * 1.5);
+
+        /* Inner page margins */
+        padding: 46px 24px 56px;
+
+        background: #ffffff;
+        overflow: hidden;
+
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Text area inside each page */
+    .book-sheet-content {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+
+        font-size: 0.92rem;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    /* Normal paragraphs */
+    .book-sheet-content > p {
+        margin: 0;
+        text-align: left;
+        text-indent: 1.25em;
+    }
+
+    /* Paragraphs that should NOT be indented */
+    .book-sheet-content > p:first-child,
+    .book-sheet-content > .book-equation,
+    .book-sheet-content > .book-equation + p,
+    .book-sheet-content > .book-section-break + p {
+        text-indent: 0;
+    }
+
+    /* Title area */
+    .book-opening {
+        width: 100%;
+        min-height: 0;
+        padding-top: 42px;
+    }
+
+    /* Title */
+    .book-opening h2 {
+        max-width: none;
+        margin: 0 auto;
+
+        font-size: 1.48rem;
+        line-height: 1.2;
+        letter-spacing: 0.07em;
+
+        text-align: center;
+    }
+
+    /* Algorithm */
+    .book-sheet-content .book-equation {
+        box-sizing: border-box;
+        width: 100%;
+
+        margin: 0 0 4.25em !important;
+        padding-left: 0;
+
+        text-indent: 0 !important;
+        text-align: center !important;
+
+        font-size: 0.72em;
+        letter-spacing: 0.012em;
+
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    /* Section-break asterisk */
+    .book-section-break {
+        margin: 2em 0;
+        text-align: center;
+    }
+
+    /* Page number */
+    .book-page-number {
+        bottom: 20px;
+        font-size: 0.72rem;
+    }
+}
